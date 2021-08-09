@@ -1,0 +1,208 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+<meta charset='utf-8'>
+<title>JQlite</title>
+<link rel='stylesheet' href='JQlite_style.css'>
+<script src='JQlite_script.js'></script>
+<script>
+
+// Modal functions starts here
+function BeforeOpening()
+{
+alert("Modal is about to be opened");
+return true;
+}
+function Opened()
+{
+alert('Modal opened');
+}
+function BeforeClosing()
+{
+alert("Modal is about to be closed");
+return true;
+}
+function Closed()
+{
+alert('Modal closed');
+}
+function createModal1()
+{
+new ModalFor("ab");
+}
+function createModal2()
+{
+new ModalFor("bc");
+}
+
+// Modal function ends here
+
+
+// ajax call placing starts here
+function saveEnquiry()
+{
+var firstName=$$$('firstName').value();
+var lastName=$$$('lastName').value();
+var age=$$$("age").value();
+
+var customer={
+"firstName" : firstName,
+"lastName" : lastName,
+"age" : age
+}
+var whatever=$$$("whatever");
+whatever.html("");
+$$$.ajax({
+"methodType": "POST",
+"url": "servletThree",
+"data": customer,
+"success": function(responseData){
+customer=JSON.parse(responseData);
+var a="First Name : "+customer.firstName+"<br>";
+a=a+"Last Name : "+customer.lastName+"<br>";
+a=a+"Age : "+customer.age;
+whatever.html(a);
+},
+"sendJSON": true,
+"failure": function(){
+alert("Some problem");
+}
+});
+}
+
+// ajax call placing ends here
+
+// Populating grid starts here
+class Student
+{
+constructor(rollNumber,name,nameOfMother,nameOfFather)
+{
+this.rollNumber=rollNumber;
+this.name=name;
+this.nameOfMother=nameOfMother;
+this.nameOfFather=nameOfFather;
+}
+}
+function createGrid()
+{
+var i;
+var students=new Array();
+for(i=101;i<=1000;i++)
+{
+students.push(new Student(i,i+" Name",i+" Mother",i+" Father"));
+}
+new Grid('dataTable','dataTablePagination',students,34);
+}
+window.addEventListener('load',createGrid);
+
+// Populating grid ends here
+
+</script>
+</head>
+<body>
+<div accordian="true">
+<h3>Heading 1</h3>
+<div>
+1 whatever whatever
+2 whatever whatever
+3 whatever whatever
+4 whatever whatever
+5 whatever whatever
+6 whatever whatever
+7 whatever whatever
+</div>
+<h3>Heading 2</h3>
+<div>
+11 whatever whatever
+22 whatever whatever
+33 whatever whatever
+44 whatever whatever
+55 whatever whatever
+66 whatever whatever
+77 whatever whatever
+</div>
+<h3>Heading 3</h3>
+<div>
+111 whatever whatever
+222 whatever whatever
+333 whatever whatever
+444 whatever whatever
+555 whatever whatever
+666 whatever whatever
+777 whatever whatever
+</div>
+</div>
+
+<div accordian='true'>
+<h3>Heading 1000</h3>
+<div>
+1 whatever whatever
+2 whatever whatever
+3 whatever whatever
+4 whatever whatever
+5 whatever whatever
+6 whatever whatever
+7 whatever whatever
+</div>
+<h3>Heading 2000</h3>
+<div>
+11 whatever whatever
+22 whatever whatever
+33 whatever whatever
+44 whatever whatever
+55 whatever whatever
+66 whatever whatever
+77 whatever whatever
+</div>
+<h3>Heading 3000</h3>
+<div>
+111 whatever whatever
+222 whatever whatever
+333 whatever whatever
+444 whatever whatever
+555 whatever whatever
+666 whatever whatever
+777 whatever whatever
+</div>
+</div>
+
+
+<button onclick='createModal1()'>Show Modal 1</button>
+
+<button onclick='createModal2()'>Show Modal 2</button>
+
+<div id='ab' forModal='true' size="600x300" header="Modal 1 header" footer="Modal 1 footer" maskColor="grey" modalBackgroundColor="ghostWhite" closeButton="true" beforeOpening="BeforeOpening()" afterOpening="Opened()" beforeClosing="BeforeClosing()" afterClosing="Closed()">
+Modal 1 body
+</div>
+<div id='bc' forModal='true' header='Modal 2 header' footer='Modal 2 footer' closeButton='true'>
+Modal 2 body
+</div>
+<div class='grid_header_division'>
+<table class='grid_head'>
+<tr>
+<td>S.No.</td>
+<td>Roll No.</td>
+<td>Name</td>
+<td>Mother</td>
+<td>Father</td>
+</tr>
+</table>
+</div>
+<div class='grid_body_division'>
+<table class='grid_body' id='dataTable'>
+</table>
+</div>
+<div class="grid_pagination_division">
+<table class='grid_pagination' id='dataTablePagination'>
+</table>
+</div>
+<h1>Post type request Example</h1>
+First name <input type='text' id='firstName'><br>
+Last name <input type='text' id='lastName'><br>
+Age <input type='text' id='age'><br>
+<button type='button' onclick='saveEnquiry()'>Save</button>
+<br>
+<div id='whatever'></div>
+<br>
+</body>
+</html>
